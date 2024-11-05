@@ -27,22 +27,35 @@ resource "docker_container" "ubuntu" {
   count = 2
   name  = "web-${count.index}"
   must_run = true
-  publish_all_ports = true
+
+  ports {
+    internal = 22
+    external = 2200 + count.index
+  }
+
   command = [
-    "tail",
-    "-f",
-    "/dev/null"
+    "sh", "-c",
+    "apt-get update && apt-get install -y openssh-server"
   ]
 
-  provisioner "local-exec" {
-    command = "ansible-playbook  -i '${self.network_data[0].ip_address},' playbook.yaml"
-  }
-/*
   connection {
-    host        = self.network_data[0].ip_address
-    type        = "ssh"
+    type     = "ssh"
+    host     = self.network_data[0].ip_address
+    port     = 2200 + count.index
+    user     = "root"
+    password = "password"
   }
-*/
+
+  provisioner "local-exec" {
+    command = "sleep 10"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "echo 'Container is set up with SSH!'"
+    ]
+  }
+
 }
 
 output "IPAddr" {
