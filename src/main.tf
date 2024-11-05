@@ -8,7 +8,8 @@ terraform {
 }
 
 provider "docker" {
-  host = "npipe:////.//pipe//docker_engine"
+  // for Windows
+  // host = "npipe:////.//pipe//docker_engine"
 }
 
 variable "amount_docker_containers" {
@@ -34,11 +35,15 @@ resource "docker_container" "ubuntu" {
   ]
 
   provisioner "local-exec" {
-    command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u root -i '${self.network_data[0].ip_address},'  playbook.yml"
+    command = "ansible-playbook  -i '${self.network_data[0].ip_address},' playbook.yaml"
   }
+/*
+  connection {
+    host        = self.network_data[0].ip_address
+    type        = "ssh"
+  }
+*/
 }
-
-
 
 output "IPAddr" {
   value = [for container in docker_container.ubuntu : container.network_data[0].ip_address]
