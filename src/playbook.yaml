@@ -1,7 +1,33 @@
 - name: Test
   hosts: myhosts
+  become: yes
   tasks:
-    - name: Ping my hosts
-      ansible.builtin.ping:
-
-
+    - name: Update and Upgrade Packages
+      apt:
+        update_cache: yes
+        upgrade: yes
+    - name: Download Nginx
+      apt:
+        name: nginx
+    - name: Start Nginx
+      service:
+        name: nginx
+        state: started
+    - name: Copy Website Config to hosts
+      copy:
+        src: ./website.cfg
+        dest: /etc/nginx/sites-available/website.cfg
+    - name: create symlink for Nginx to work
+      file:
+        src: /etc/nginx/sites-available/website.cfg
+        dest: /etc/nginx/sites-enabled/default
+        state: link
+    - name: copy the Content of the web site
+      copy:
+        directory_mode: true
+        src: ./cool_website
+        dest: /home/ubuntu
+    - name: restart nginx
+      service:
+        name: nginx
+        state: restarted

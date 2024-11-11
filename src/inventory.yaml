@@ -5,16 +5,19 @@ myhosts:
       ansible_connection: ssh
       ansible_user: ubuntu
       ansible_ssh_pass: password
+      ansible_become_password: password
       ansible_port: 7000
     host2:
       ansible_host: localhost
       ansible_connection: ssh
       ansible_user: ubuntu
       ansible_ssh_pass: password
+      ansible_become_password: password
       ansible_port: 7001
     host3:
       ansible_host: localhost
       ansible_connection: ssh
       ansible_user: ubuntu
       ansible_ssh_pass: password
+      ansible_become_password: password
       ansible_port: 7002
