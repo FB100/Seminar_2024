@@ -1,8 +1,20 @@
 myhosts:
   hosts:
     host1:
-      ansible_host: localhost ansible_connection=ssh ansible_user=ubuntu ansible_ssh_pass=password ansible_port=7000
+      ansible_host: localhost
+      ansible_connection: ssh
+      ansible_user: ubuntu
+      ansible_ssh_pass: password
+      ansible_port: 7000
     host2:
-      ansible_host:  127.0.0.1 ansible_connection=ssh ansible_user=ubuntu ansible_ssh_pass=password ansible_port=7001
+      ansible_host: localhost
+      ansible_connection: ssh
+      ansible_user: ubuntu
+      ansible_ssh_pass: password
+      ansible_port: 7001
     host3:
-      ansible_host:  127.0.0.1 ansible_connection=ssh ansible_user=ubuntu ansible_ssh_pass=password ansible_port=7002
+      ansible_host: localhost
+      ansible_connection: ssh
+      ansible_user: ubuntu
+      ansible_ssh_pass: password
+      ansible_port: 7002
