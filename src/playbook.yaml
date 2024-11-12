@@ -27,10 +27,6 @@
         directory_mode: true
         src: ./website
         dest: /var/www
-    - name: allow access to Website
-      file:
-        path: /etc/nginx/sites-enabled/default
-        mode: '777'
     - name: restart nginx
       service:
         name: nginx
